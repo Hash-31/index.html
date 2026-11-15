@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>H.A.S.H · Human Analytics &amp; Smart Health</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1f7;--pn:#fff;--ink:#14182b;--mu:#5a6280;--ln:#d6dbea;--ok:#12805a;--wn:#a86a00;--cr:#cc2f3a;--ac:#3b5bdb;--okb:#d9f3e8;--wnb:#fdebc8;--crb:#fbdadd;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1122;--pn:#171d36;--ink:#e8ecfa;--mu:#98a1c4;--ln:#2b3358;--ok:#38d39b;--wn:#f4b43c;--cr:#ff6b74;--ac:#7c9cff;--okb:#12382f;--wnb:#40300f;--crb:#431a22}}
+:root[data-theme="dark"]{--bg:#0d1122;--pn:#171d36;--ink:#e8ecfa;--mu:#98a1c4;--ln:#2b3358;--ok:#38d39b;--wn:#f4b43c;--cr:#ff6b74;--ac:#7c9cff;--okb:#12382f;--wnb:#40300f;--crb:#431a22}
+:root[data-sx="m"]{--bg:#e3edfc;--ac:#1c64e8;--ln:#c5d5f0}
+:root[data-sx="f"]{--bg:#fde8f1;--ac:#d6336c;--ln:#f3c6d9}
+@media (prefers-color-scheme:dark){:root[data-sx="m"]:not([data-theme="light"]){--bg:#0a1a33;--pn:#11264a;--ln:#24407a;--ac:#6ea8ff;--onac:#0a1a33}:root[data-sx="f"]:not([data-theme="light"]){--bg:#2a0f1c;--pn:#3a1628;--ln:#6b2f4a;--ac:#ff8fb8;--onac:#2a0f1c}}
+.ph{display:flex;gap:6px;flex-wrap:wrap}.ph img{width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid var(--ln);display:block}summary{cursor:pointer;font-weight:600}.th{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px}.th input{width:100%}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Figtree,system-ui,sans-serif}
+h1,h2,h3,.big{font-family:Sora,system-ui,sans-serif;margin:0}
+main{max-width:1100px;margin:0 auto;padding:16px}
+header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+h1{font-size:26px;font-weight:800;letter-spacing:.04em}h1 small{display:block;font:400 12px Figtree;color:var(--mu);letter-spacing:0}
+.ctl{display:flex;flex-wrap:wrap;gap:8px}
+select,button,input{font:inherit;color:var(--ink);background:var(--pn);border:1px solid var(--ln);border-radius:8px;padding:7px 10px}
+button{cursor:pointer}button:hover{border-color:var(--ac)}button.pri{background:var(--ac);color:var(--onac,#fff);border-color:var(--ac)}
+button:focus-visible,select:focus-visible,input:focus-visible,.card:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.panel{background:var(--pn);border:1px solid var(--ln);border-radius:14px;padding:16px}
+.top{display:grid;grid-template-columns:minmax(240px,300px) 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:760px){.top{grid-template-columns:1fr}}
+.ringw{text-align:center}.ringw svg{width:190px;height:190px}
+.ring{transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1),stroke .5s}
+.big{font-size:38px;font-weight:800}
+.bar{height:8px;background:var(--ln);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;transition:width 1.2s}
+.hz{display:grid;grid-template-columns:170px 1fr 44px;gap:8px;align-items:center;padding:5px 6px;border-radius:8px;cursor:pointer;margin:0}
+.hz.sel{background:var(--bg)}.hz b{font-weight:600}
+.alert{padding:12px 14px;border-radius:12px;margin-bottom:14px;border:1px solid}
+.alert.crit{background:var(--crb);border-color:var(--cr)}.alert.warn{background:var(--wnb);border-color:var(--wn)}.alert.ok{background:var(--okb);border-color:var(--ok)}
+.tasks{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;margin-top:8px}
+.task{display:flex;gap:8px;align-items:center;padding:8px 10px;border:1px dashed var(--ln);border-radius:10px;font-size:14px;background:none;text-align:left;width:100%}
+.task.done{opacity:.55;text-decoration:line-through}.task.due{border-style:solid;border-color:var(--wn)}
+.badges span{display:inline-block;padding:3px 10px;margin:3px 4px 0 0;border-radius:99px;border:1px solid var(--ln);font-size:13px;color:var(--mu)}
+.badges span.on{background:var(--ac);color:var(--onac,#fff);border-color:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:10px}
+.card{border-left:6px solid;cursor:pointer;display:block}.card.s0{border-color:var(--ok)}.card.s1{border-color:var(--wn)}.card.s2{border-color:var(--cr)}
+.card h3{font-size:14px;font-weight:600;color:var(--mu)}
+.val{font:800 28px Sora}.val small{font:400 13px Figtree;color:var(--mu)}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:1px 9px;border-radius:99px}
+.t0{background:var(--okb);color:var(--ok)}.t1{background:var(--wnb);color:var(--wn)}.t2{background:var(--crb);color:var(--cr)}
+.pulse{animation:pl 1.4s infinite}@keyframes pl{50%{box-shadow:0 0 0 6px transparent;border-color:var(--cr)}}
+dialog{max-width:720px;width:calc(100% - 24px);border:1px solid var(--ln);border-radius:16px;background:var(--pn);color:var(--ink);padding:18px}
+dialog::backdrop{background:#0008}
+dl{margin:10px 0 0}dt{font-weight:600;margin-top:10px}dd{margin:2px 0 0;color:var(--mu)}
+.line{stroke-dasharray:1200;stroke-dashoffset:1200;animation:dr 1.6s forwards}@keyframes dr{to{stroke-dashoffset:0}}
+#splash{--ac:#7c9cff;--onac:#0a0f24;--ok:#38d39b;--wn:#f4b43c;--pn:#171d36;--ink:#e8ecfa;--mu:#a9b2d6;--ln:#2b3358;position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px));background:radial-gradient(circle at 20% 15%,#1b2a66 0,#0a0f24 55%,#05070f 100%);color:var(--ink);text-align:center;overflow:auto;transition:opacity .6s,visibility .6s}
+#splash.off{opacity:0;visibility:hidden}
+#splash::before{content:"";position:absolute;inset:0;background-image:radial-gradient(1.5px 1.5px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 90px 140px,#fff9,transparent),radial-gradient(1.5px 1.5px at 160px 70px,#fff,transparent);background-size:200px 200px;opacity:.5;animation:tw 4s infinite alternate}@keyframes tw{to{opacity:.2}}
+.sp-in{position:relative;max-width:460px}.logo{width:200px;height:200px;animation:fl 5s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-8px)}}
+.ecg{stroke-dasharray:260;animation:ec 2.6s linear infinite}@keyframes ec{from{stroke-dashoffset:260}to{stroke-dashoffset:-260}}
+.sp-t{font:800 56px Sora,system-ui,sans-serif;letter-spacing:.08em}.sp-o{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:18px 0}.sp-o label{font-size:13px;color:var(--mu);display:grid;gap:4px;text-align:left}.sp-f{font-size:12px;color:var(--mu);margin-top:16px}
+#toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,120px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;transition:transform .4s;max-width:90%;z-index:9}
+#toast.on{transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.line{stroke-dashoffset:0}}
+</style></head><body><main>
+<header><h1>H.A.S.H<small>Human Analytics &amp; Smart Health</small></h1>
+<div class="ctl"><label>Environment <select id="env"></select></label>
+<label>Sex <select id="sex"><option value="m">Male</option><option value="f">Female</option></select></label>
+<button id="hm" title="Back to the start screen">⌂ Home</button><button id="snb" title="Sound on or off">🔊</button><button id="un" disabled title="Undo the last change (Ctrl+Z)">↶ Undo</button><button id="nx" class="pri">Next day ▸</button><button id="rs">Reset demo</button></div></header>
+<div id="app"></div>
+<dialog id="dlg"></dialog><div id="toast" role="status"></div>
+<div id="splash" role="dialog" aria-label="H.A.S.H start screen"><div class="sp-in">
+<svg class="logo" viewBox="0 0 220 220" aria-hidden="true"><g transform="translate(110 110) rotate(-25)"><ellipse rx="100" ry="38" fill="none" stroke="var(--ac)" stroke-width="3" opacity=".7"/></g><circle cx="110" cy="110" r="62" fill="var(--pn)" stroke="var(--ac)" stroke-width="4"/><path class="ecg" d="M55 112h26l9-24 16 50 13-38 7 12h39" fill="none" stroke="var(--ok)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><g transform="translate(110 110) rotate(-25)"><circle r="7" fill="var(--wn)"><animateMotion dur="6s" repeatCount="indefinite" path="M-100 0a100 38 0 1 0 200 0a100 38 0 1 0 -200 0"/></circle></g></svg>
+<div class="sp-t">H.A.S.H</div><p style="margin:4px 0 0;color:var(--mu)">Human Analytics &amp; Smart Health</p>
+<div class="sp-o"><label>Astronaut profile<select id="sps"><option value="m">Male</option><option value="f">Female</option></select></label><label>Environment<select id="spe"></select></label></div>
+<div class="ctl" style="justify-content:center"><button class="pri" id="sgo">▶ Start mission</button><button id="snw">New mission</button><button id="ssd">🔊 Sound on</button></div>
+<p class="sp-f">Start mission keeps your saved data. New mission begins again with demo data. A training and decision-support concept, not a medical device.</p></div></div>
+</main>
+<script>
+const $=s=>document.querySelector(s),HZ={rad:"Space radiation",iso:"Isolation & confinement",dist:"Distance from Earth",grav:"Gravity fields",env:"Closed environment"};
+const ENV={ship:{n:"Spacecraft (Mars transit)",gr:0,d:720,dose:1.8,tip:"Zero gravity and long signal delays: exercise 2+ hours daily, rehearse the storm-shelter drill, and treat medical problems with the onboard protocol first."},
+stn:{n:"Space station (low Earth orbit)",gr:0,d:1,dose:.6,tip:"Ground support is near-instant: share data often. Prioritize resistive exercise, CO₂ checks near sleeping areas and sleep lighting."},
+rov:{n:"Pressurized rover (Moon)",gr:.17,d:1.3,dose:1.4,tip:"Short sorties in partial gravity: lunar dust irritates lungs and eyes, so keep suits outside and watch SpO₂, and log radiation after each traverse."},
+base:{n:"Mars surface base",gr:.38,d:720,dose:.67,tip:"Partial gravity helps bones but not enough: keep training. Replies take up to 22 minutes, so practice self-care, and watch isolation and mood."}};
+const I=[
+{id:"hr",n:"Resting heart rate",u:"bpm",d:66,s:1,g:[50,85],gf:[55,90],a:[40,100],f:2,h:["grav","dist"],t:.05,how:"Wrist or chest wearable, or a 30 s pulse count after 5 min rest.",why:"Shows cardiovascular deconditioning and stress.",eff:"Fluid shifts and weak gravity loading change heart workload; radiation adds vascular risk.",call:"Resting above 100 or below 40 bpm, irregular rhythm, chest pain, fainting.",act:"Aerobic sessions, hydration, less caffeine; record an ECG if available."},
+{id:"sbp",n:"Systolic blood pressure",u:"mmHg",d:112,s:1,g:[100,125],gf:[95,122],a:[90,139],f:3,h:["grav","env"],t:0,how:"Automated upper-arm cuff, seated and rested.",why:"Shows how well the body handles fluid shifts.",eff:"Microgravity moves fluid to the head; gravity return can cause low pressure.",call:"Above 140, or below 90 with dizziness.",act:"Planned fluids and salt, compression garments, rise slowly."},
+{id:"spo2",n:"Blood oxygen (SpO₂)",u:"%",d:98,s:1,g:[95,100],a:[92,100],f:2,h:["env"],t:0,how:"Fingertip pulse oximeter.",why:"Catches lung or cabin-air problems early.",eff:"Dust, trace gases and altered air quality strain the lungs.",call:"Below 92%, or below 95% with breathlessness.",act:"Check cabin O₂ and CO₂, change filters, rest, use supplemental oxygen."},
+{id:"temp",n:"Body temperature",u:"°C",d:36.7,s:.1,g:[36.1,37.2],a:[35.5,37.9],f:1,h:["rad","env"],t:0,how:"Forehead or oral thermometer at the same time daily.",why:"Fever flags infection or reactivated dormant viruses.",eff:"Radiation, stress and confinement weaken immune response.",call:"Above 38 °C for 12 h, or with rash and severe fatigue.",act:"Rest, hydrate, separate from crew, clean shared surfaces, take prescribed medicine."},
+{id:"glu",n:"Fasting blood glucose",u:"mg/dL",d:88,s:1,g:[70,99],a:[65,125],f:7,h:["env","dist"],t:.2,how:"Fingertip glucometer before the first meal.",why:"Reveals insulin resistance from stress and inactivity.",eff:"Low activity, stress hormones and poor sleep raise glucose.",call:"Above 126 or below 70 mg/dL, or constant thirst.",act:"Cut sugary foods, move more, eat regularly, retest."},
+{id:"kcal",n:"Energy intake",u:"kcal/day",d:2700,s:50,g:[2300,3200],a:[1800,3600],f:1,h:["env","iso"],t:-15,how:"Food log or package scanning.",why:"Astronauts often undereat, which speeds muscle and bone loss.",eff:"Fluid shifts, taste change and repetitive menus cut appetite.",call:"Under 1800 kcal for 3 days or rapid weight loss.",act:"Add favorite snacks, schedule shared meals, boost protein."},
+{id:"mass",n:"Body mass change",u:"%",d:0,s:.1,g:[-2,2],a:[-5,5],f:7,h:["grav","env"],t:-.05,how:"Space-rated mass scale weekly.",why:"Tracks muscle, fat and fluid loss.",eff:"Less gravity means less muscle loading; low intake adds to loss.",call:"Loss beyond 5% of launch mass.",act:"More calories and protein, resistance training."},
+{id:"vitd",n:"Vitamin D",u:"ng/mL",d:38,s:1,g:[30,60],a:[20,100],f:14,h:["env","grav"],t:-.2,how:"Point-of-care blood test or periodic sample.",why:"Supports bones, muscles and immunity.",eff:"No sunlight in a habitat; low levels worsen bone loss.",call:"Below 20 ng/mL.",act:"Take prescribed supplements, review diet."},
+{id:"bone",n:"Bone density (T-score)",u:"",d:.3,s:.1,g:[-1,4],a:[-2.5,4],f:30,h:["grav","dist"],t:-.03,how:"Portable ultrasound of heel or calf compared with baseline.",why:"Bone can drop about 1% a month in microgravity.",eff:"Unloaded skeleton in low gravity; radiation adds damage.",call:"T-score below -2.5 or sudden bone pain.",act:"Resistive exercise, calcium and vitamin D, hit loading targets."},
+{id:"ex",n:"Exercise time",u:"min/day",d:150,s:5,g:[120,300],a:[60,300],f:1,h:["grav","iso"],t:-2,how:"Treadmill, bike and resistive device logs.",why:"Main countermeasure for bone, muscle and heart loss.",eff:"Weak gravity gives little natural loading.",call:"No sessions for 3 days or pain during training.",act:"Split into short sessions, train with crewmates, use harness loads."},
+{id:"sl",n:"Sleep",u:"h",d:7.2,s:.1,g:[7,9],a:[5.5,10],f:1,h:["iso","env"],t:-.03,how:"Wrist tracker or sleep diary.",why:"Poor sleep harms mood, memory and immunity.",eff:"Noise, light and 90-minute orbital sunrises disturb the body clock.",call:"Under 5.5 h for 3 nights or confusion.",act:"Use lighting schedules, quiet hours, no screens before bed."},
+{id:"mood",n:"Mood and morale",u:"/10",d:7.5,s:1,g:[7,10],a:[4,10],f:1,h:["iso","dist"],t:-.09,how:"Daily self-rating and short questionnaire.",why:"Behavioral conditions threaten performance and safety.",eff:"Small crew, confinement and delayed contact with home raise stress.",call:"Below 4, hopeless thoughts, conflict or withdrawal.",act:"Talk with crew, call family, hobbies, request a private counseling session."},
+{id:"dose",n:"Radiation dose rate",u:"mSv/day",d:0,s:.05,g:[0,0],a:[0,0],f:1,h:["rad"],t:0,how:"Wearable dosimeter and cabin radiation monitor.",why:"Cumulative dose raises cancer, heart and immune risks.",eff:"Solar storms and cosmic rays pass through thin walls.",call:"Spike above 4× the usual rate.",act:"Go to the storm shelter, wait for all-clear, log cumulative dose."},
+{id:"co2",n:"Cabin CO₂ (approximate limits)",u:"ppm",d:2400,s:100,g:[0,3000],a:[0,5000],f:1,h:["env"],t:20,how:"Cabin air monitor or personal badge.",why:"High CO₂ causes headaches, fatigue and poor judgment.",eff:"Closed air loops let CO₂ pool around crew, especially asleep.",call:"Above 5000 ppm or a persistent headache.",act:"Check scrubber, raise airflow, leave the area."},
+{id:"cyc",n:"Days since last period",u:"days",d:14,s:1,g:[0,35],a:[0,60],f:7,h:["rad","iso"],t:0,fem:1,how:"Period tracker on this page (start, end, flow, symptoms); hormone tests if needed.",why:"Cycle changes reflect stress, nutrition and hormones, and relate to bone and heart health.",eff:"Radiation, stress, low intake and hormonal suppression alter cycles.",call:"No period over 60 days outside planned suppression, heavy bleeding, severe pain.",act:"Log it, review the contraception plan with the flight surgeon, support nutrition and sleep."}];
+const DAYS=[["Hydrate 2 L"],["Resistive exercise session"],["Crew check-in chat"],["Air filter and CO₂ scrubber check"]];
+let S,filter=null,cur=null;const KEY="hash-v1";
+const ld=()=>{try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}},sv=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const rg=i=>{const o=S.th&&S.th[i.id];if(o)return o;if(i.id==="cyc"&&S.pd&&S.pd.sup)return{g:[0,120],a:[0,200]};if(i.id==="dose")return{g:[0,ENV[S.env].dose*1.5],a:[0,ENV[S.env].dose*4]};return{g:S.sex==="f"&&i.gf?i.gf:i.g,a:i.a}};
+const dp=i=>(String(i.s).split(".")[1]||"").length,rd=(v,i)=>+(+v).toFixed(dp(i));
+const ST=["ok","warn","crit"],LB=["Good","Watch","Act now"],SC=[100,60,20];
+const stat=(i,v)=>{const r=rg(i);return v>=r.g[0]&&v<=r.g[1]?0:v>=r.a[0]&&v<=r.a[1]?1:2};
+const act=()=>I.filter(i=>!i.fem||S.sex==="f");
+function seed(){const e=Object.keys(ENV)[0];S={env:"ship",sex:"m",day:15,xp:0,rd:{},dn:{}};
+for(const i of I){const b=i.id==="dose"?ENV.ship.dose:i.d,p=[];
+for(let d=1;d<=14;d++){const f=i.f,ok=f===1||(f<=3&&d%f===0)||(f>3&&[1,7,14].includes(d)||(f===30&&d===1));if(!ok)continue;
+let n=(Math.sin(d*12.99+i.id.length*7.7)*43758)%1-.5,v=b+i.t*d+n*i.s*3;if(i.id==="cyc")v=(d+6)%29;if(f===30&&d===14)continue;p.push([d,rd(v,i)])}
+S.rd[i.id]=p}
+S.rd.bone.push([14,rd(.1,{s:.1})]);S.xp=40;S.pd={starts:[-34,-6],ex:{},sup:0,n:{}}}
+const last=i=>{const a=S.rd[i.id];return a&&a.length?a[a.length-1]:null};
+const due=()=>act().filter(i=>{const l=last(i);return !l||S.day-l[0]>=i.f});
+const streak=()=>{const ds=new Set();for(const k in S.rd)S.rd[k].forEach(p=>ds.add(p[0]));let c=0,d=S.day;if(!ds.has(d))d--;while(ds.has(d)){c++;d--}return c};
+function score(list){const v=list.map(i=>last(i)).filter(Boolean);if(!v.length)return 100;let t=0,n=0;list.forEach(i=>{const l=last(i);if(l){t+=SC[stat(i,l[1])];n++}});return Math.round(t/n)}
+function hzScore(k){let s=score(act().filter(i=>i.h.includes(k)));if(k==="dist")s=Math.max(0,s-Math.min(25,Math.round(ENV[S.env].d/60*1.5)));return s}
+const col=s=>s>=80?"var(--ok)":s>=55?"var(--wn)":"var(--cr)";
+const dl=s=>s<60?(Math.round(s)+" s"):Math.round(s/60)+" min";
+function spark(i,w,h){const a=(S.rd[i.id]||[]).slice(-14);if(a.length<2)return"";const vs=a.map(p=>p[1]),mn=Math.min(...vs),mx=Math.max(...vs),sp=(mx-mn)||1;
+return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" aria-hidden="true"><polyline fill="none" stroke="var(--ac)" stroke-width="2" points="${a.map((p,k)=>(k/(a.length-1)*w).toFixed(1)+","+(h-4-(p[1]-mn)/sp*(h-8)).toFixed(1)).join(" ")}"/></svg>`}
+function chart(i){const a=S.rd[i.id]||[],r=rg(i),vs=a.map(p=>p[1]).concat([r.a[0],r.a[1]]),lo0=Math.min(...vs),hi0=Math.max(...vs),pd=(hi0-lo0)*.15||1,lo=lo0-pd,hi=hi0+pd,W=640,H=220,L=44,B=24;
+const x=d=>L+(d-1)/Math.max(1,S.day-1)*(W-L-8),y=v=>H-B-(v-lo)/(hi-lo)*(H-B-8),box=(c,z)=>`<rect x="${L}" y="${y(Math.min(z[1],hi))}" width="${W-L-8}" height="${Math.max(0,y(Math.max(z[0],lo))-y(Math.min(z[1],hi)))}" fill="${c}" opacity=".22"/>`;
+let g=`<rect x="${L}" y="8" width="${W-L-8}" height="${H-B-8}" fill="var(--cr)" opacity=".18"/>`+box("var(--wn)",r.a)+box("var(--ok)",r.g);
+for(let k=0;k<5;k++){const v=lo+(hi-lo)*k/4;g+=`<text x="${L-6}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="var(--mu)">${+v.toFixed(2)}</text>`}
+g+=`<text x="${L}" y="${H-6}" font-size="11" fill="var(--mu)">day 1</text><text x="${W-8}" y="${H-6}" text-anchor="end" font-size="11" fill="var(--mu)">day ${S.day}</text>`;
+const pts=a.map(p=>x(p[0]).toFixed(1)+","+y(p[1]).toFixed(1)).join(" ");
+g+=`<polyline class="line" fill="none" stroke="var(--ink)" stroke-width="2.5" points="${pts}"/>`+a.map(p=>`<circle cx="${x(p[0])}" cy="${y(p[1])}" r="4.5" fill="${["var(--ok)","var(--wn)","var(--cr)"][stat(i,p[1])]}" stroke="var(--pn)" stroke-width="1.5"><title>Day ${p[0]}: ${p[1]} ${i.u}</title></circle>`).join("");
+return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${i.n} over time">${g}</svg>`}
+function log(id,v){const i=I.find(k=>k.id===id);if(v===""||isNaN(v))return;v=rd(v,i);snap();S.rd[id]=(S.rd[id]||[]).filter(p=>p[0]!==S.day).concat([[S.day,v]]);const s=stat(i,v);S.xp+=10+(s===0?5:0);sv();snd(s===0?"ok":s===1?"warn":"crit");toast(`${i.n} logged: ${v} ${i.u} (${LB[s]}). +${10+(s===0?5:0)} XP`);render();if(cur)detail(id)}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(t.k);t.k=setTimeout(()=>t.classList.remove("on"),4200)}
+function detail(id){cur=id;const i=I.find(k=>k.id===id),l=last(i),s=l?stat(i,l[1]):0,E=ENV[S.env],r=rg(i);
+const dl_=$("#dlg");dl_.innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px"><h2 style="font-size:20px">${i.n}</h2><button id="cl" aria-label="Close">✕</button></div>
+<p>${l?`Latest: <b>${l[1]} ${i.u}</b> on day ${l[0]} <span class="tag t${s}">${LB[s]}</span>`:"No readings yet"}<br><span style="color:var(--mu)">Good: ${+r.g[0].toFixed(2)} to ${+r.g[1].toFixed(2)} ${i.u} · Watch: ${+r.a[0].toFixed(2)} to ${+r.a[1].toFixed(2)}</span></p>${chart(i)}
+<div class="ctl" style="margin:8px 0"><input id="nv" type="number" step="${i.s}" placeholder="New value (${i.u})" aria-label="New value" value="${l?l[1]:""}"><button class="pri" id="lg">Log for day ${S.day}</button></div>
+${s===2?`<div class="alert crit"><b>Contact your flight surgeon.</b> One-way signal delay here is about ${dl(E.d)}. ${E.d>60?"Start the self-care protocol now rather than waiting for a reply.":"Share this reading right away."}</div>`:s===1?`<div class="alert warn">Watch closely and repeat the measurement in ${Math.max(1,Math.ceil(i.f/2))} day(s).</div>`:""}
+${cam(i)}<p style="color:var(--mu);font-size:13px">Hazards: ${i.h.map(k=>HZ[k]).join(", ")}</p>
+<dl><dt>How to measure in space</dt><dd>${i.how}</dd><dt>Why measure it</dt><dd>${i.why}</dd><dt>How hazards affect it</dt><dd>${i.eff}</dd><dt>Escalate to flight surgeons when</dt><dd>${i.call}</dd><dt>What you can do</dt><dd>${i.act}</dd><dt>In your environment: ${E.n}</dt><dd>${E.tip}</dd></dl>${thr(i)}`;
+$("#cl").onclick=()=>{cur=null;dl_.close()};bind(i);$("#lg").onclick=()=>log(id,$("#nv").value);dl_.onclose=()=>cur=null;if(!dl_.open)dl_.showModal()}
+const PH={bone:"Ultrasound image",temp:"Skin or rash photo",kcal:"Meal photo",glu:"Glucometer screen",spo2:"Oximeter screen",sbp:"Cuff display",mood:"Selfie check-in"};
+const cam=i=>{if(!PH[i.id]&&i.id!=="hr")return"";const g=(S.ph&&S.ph[i.id])||[];return `<details open style="margin:8px 0"><summary>Camera input</summary>${i.id==="hr"?`<p><button id="pb">📷 Measure pulse with camera</button> <span id="pm" style="color:var(--mu)">Cover the rear lens and flash with a fingertip and hold still for 15 s. Estimate only.</span></p>`:""}${PH[i.id]?`<p>${PH[i.id]}: <input type="file" id="pf" accept="image/*" capture="environment"></p>`:""}<div class="ph">${g.map(p=>`<figure style="margin:0;font-size:11px;color:var(--mu)"><img src="${p.u}" alt="${PH[i.id]}, day ${p.d}">day ${p.d}</figure>`).join("")}</div></details>`};
+const thr=i=>{const r=rg(i),c=S.th&&S.th[i.id];return `<details style="margin-top:12px"><summary>Thresholds${c?" (customized)":""}</summary><p style="color:var(--mu);font-size:13px">Defaults are illustrative reference ranges, adjusted by sex where noted. Your flight surgeon can set personal limits.</p><div class="th">${[["Good from",r.g[0]],["Good to",r.g[1]],["Watch from",r.a[0]],["Watch to",r.a[1]]].map(x=>`<label style="font-size:12px">${x[0]}<input type="number" step="any" value="${+x[1].toFixed(2)}"></label>`).join("")}</div><p><button id="ths">Save thresholds</button>${c?` <button id="thr">Restore defaults</button>`:""}</p></details>`};
+function bind(i){const b=$("#pb");if(b)b.onclick=pulse;const f=$("#pf");if(f)f.onchange=e=>photo(i.id,e.target.files[0]);const s=$("#ths");if(s)s.onclick=()=>{const v=[...document.querySelectorAll(".th input")].map(e=>+e.value);if(v.some(isNaN)||v[2]>v[0]||v[3]<v[1]||v[0]>v[1]){toast("Check the thresholds: the watch range must contain the good range.");return}snap();S.th=S.th||{};S.th[i.id]={g:[v[0],v[1]],a:[v[2],v[3]]};sv();render();detail(i.id)};const r=$("#thr");if(r)r.onclick=()=>{snap();delete S.th[i.id];sv();render();detail(i.id)}}
+function photo(id,f){if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas"),k=180/Math.max(im.width,im.height);c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);snap();S.ph=S.ph||{};S.ph[id]=(S.ph[id]||[]).concat([{d:S.day,u:c.toDataURL("image/jpeg",.6)}]).slice(-6);S.xp+=10;sv();toast("Photo saved to your log. +10 XP");render();detail(id)};im.src=r.result};r.readAsDataURL(f)}
+async function pulse(){const o=$("#pm");let st;try{st=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}})}catch(e){o.textContent="Camera not available here. Allow camera access, or enter the value by hand.";return}
+const v=document.createElement("video");v.srcObject=st;v.muted=true;v.playsInline=true;await v.play();try{await st.getVideoTracks()[0].applyConstraints({advanced:[{torch:true}]})}catch(e){}
+const c=document.createElement("canvas");c.width=c.height=24;const x=c.getContext("2d",{willReadFrequently:true}),a=[],t0=performance.now();
+await new Promise(r=>{const f=()=>{const t=performance.now()-t0;if(t>15000)return r();x.drawImage(v,0,0,24,24);const d=x.getImageData(0,0,24,24).data;let s=0;for(let k=0;k<d.length;k+=4)s+=d[k];a.push([t,s/576]);o.textContent="Hold still… "+Math.ceil((15000-t)/1000)+" s";setTimeout(f,33)};f()});
+st.getTracks().forEach(k=>k.stop());const m=a.reduce((p,q)=>p+q[1],0)/a.length;if(m<90){o.textContent="Signal too dark. Cover the lens fully and retry.";return}
+const y=a.map((p,k)=>{let s=0,n=0;for(let j=Math.max(0,k-12);j<=Math.min(a.length-1,k+12);j++){s+=a[j][1];n++}return p[1]-s/n}),sd=Math.sqrt(y.reduce((p,q)=>p+q*q,0)/y.length),pk=[];
+for(let k=2;k<y.length-2;k++){const w=(y[k-1]+y[k]+y[k+1])/3;if(y[k]>y[k-1]&&y[k]>=y[k+1]&&w>.3*sd&&(!pk.length||a[k][0]-pk[pk.length-1]>350))pk.push(a[k][0])}
+if(pk.length<8){o.textContent="Pulse signal too weak. Press gently, hold still and retry.";return}
+const bpm=Math.round((pk.length-1)/(pk[pk.length-1]-pk[0])*60000);$("#nv").value=bpm;o.textContent=`Estimated ${bpm} bpm. Check the value, then log it.`}
+function render(){document.documentElement.dataset.sx=S.sex;syncCyc();const cd=+(S.rd.dose||[]).reduce((p,q)=>p+q[1],0).toFixed(1),E=ENV[S.env],L=act(),sc=score(L),lv=Math.floor(S.xp/100)+1,sk=streak(),dd=due(),cr=L.filter(i=>{const l=last(i);return l&&stat(i,l[1])===2}),wn=L.filter(i=>{const l=last(i);return l&&stat(i,l[1])===1});
+const bd=[["First reading",S.xp>0],["3-day streak",sk>=3],["7-day streak",sk>=7],["All systems green",sc>=90],["Level 3",lv>=3]];
+const al=cr.length?`<div class="alert crit"><b>${cr.length} indicator(s) need flight-surgeon attention:</b> ${cr.map(i=>i.n).join(", ")}. Signal delay is about ${dl(E.d)}: ${E.d>60?"begin the self-care protocol now and send your data.":"send your data now."}</div>`:wn.length?`<div class="alert warn"><b>Keep watching:</b> ${wn.map(i=>i.n).join(", ")}.</div>`:`<div class="alert ok">All measured indicators are in the good range.</div>`;
+const hzr=Object.keys(HZ).map(k=>{const s=hzScore(k);return `<p class="hz ${filter===k?"sel":""}" data-hz="${k}" tabindex="0"><b>${HZ[k]}</b><span class="bar"><i style="width:${s}%;background:${col(s)}"></i></span><span>${s}</span></p>`}).join("");
+const tk=dd.map(i=>`<button class="task due" data-m="${i.id}">📏 Measure: ${i.n}</button>`).join("")+DAYS.concat([[S.env==="ship"||S.env==="stn"?"Storm-shelter drill review":"Dust and suit-seal check"]]).map((t,k)=>{const key=S.day+":"+k;return `<button class="task ${S.dn[key]?"done":""}" data-t="${key}">${S.dn[key]?"✔":"○"} ${t[0]} (+5 XP)</button>`}).join("");
+const cards=L.filter(i=>!filter||i.h.includes(filter)).map(i=>{const l=last(i),s=l?stat(i,l[1]):0,dueI=dd.includes(i);return `<div class="panel card s${s} ${s===2?"pulse":""}" data-id="${i.id}" tabindex="0" role="button" aria-label="${i.n} details"><h3>${i.n}</h3><div class="val">${l?l[1]:"–"} <small>${i.u}</small></div><span class="tag t${s}">${l?LB[s]:"No data"}</span>${dueI?` <span class="tag t1">Due</span>`:""}${spark(i,220,34)}</div>`}).join("");
+$("#app").innerHTML=`${al}<div class="top"><div class="panel ringw"><svg viewBox="0 0 130 130"><circle cx="65" cy="65" r="54" fill="none" stroke="var(--ln)" stroke-width="10"/><circle class="ring" cx="65" cy="65" r="54" fill="none" stroke="${col(sc)}" stroke-width="10" stroke-linecap="round" stroke-dasharray="339.3" stroke-dashoffset="339.3" transform="rotate(-90 65 65)" data-o="${339.3*(1-sc/100)}"/><text x="65" y="72" text-anchor="middle" font-family="Sora" font-weight="800" font-size="30" fill="var(--ink)">${sc}</text></svg>
+<div>Mission day ${S.day} · ${E.n}</div><div style="color:var(--mu);font-size:13px">${E.gr} g · signal delay ${dl(E.d)} one way</div>
+<p style="margin:10px 0 4px"><b>Level ${lv}</b> · ${S.xp%100}/100 XP · 🔥 ${sk}-day streak</p><div class="bar"><i style="width:${S.xp%100}%;background:var(--ac)"></i></div><div class="badges">${bd.map(b=>`<span class="${b[1]?"on":""}">${b[0]}</span>`).join("")}</div></div>
+<div class="panel"><h2 style="font-size:17px">Five hazards of spaceflight</h2><p style="color:var(--mu);margin:2px 0 8px;font-size:13px">Select a hazard to filter the indicators it affects.${filter?` <a href="#" id="clr">Show all</a>`:""}</p>${hzr}<p style="margin:8px 0 2px;font-size:13px">Radiation so far: <b>${cd} mSv</b> across logged days, against an illustrative 600 mSv career reference</p><div class="bar"><i style="width:${Math.min(100,cd/6)}%;background:${col(100-cd/6)}"></i></div><p style="font-size:13px;color:var(--mu)">${E.tip}</p></div></div>
+<div class="panel" style="margin-bottom:14px"><h2 style="font-size:17px">Today’s mission routine</h2><div class="tasks">${tk}</div></div>${ptr()}<h2 style="font-size:17px">Health indicators</h2><div class="grid">${cards}</div>
+<p style="color:var(--mu);font-size:12px;margin-top:18px">H.A.S.H is a training and decision-support concept, not a medical device. Default thresholds are illustrative reference ranges; edit them on any indicator. Photos stay on this device. Always follow your flight surgeon’s guidance.</p>`;
+requestAnimationFrame(()=>requestAnimationFrame(()=>{const r=document.querySelector(".ring");if(r)r.style.strokeDashoffset=r.dataset.o}));
+document.querySelectorAll("[data-id]").forEach(e=>{e.onclick=()=>detail(e.dataset.id);e.onkeydown=ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();detail(e.dataset.id)}}});
+document.querySelectorAll("[data-m]").forEach(e=>e.onclick=()=>detail(e.dataset.m));
+document.querySelectorAll("[data-t]").forEach(e=>e.onclick=()=>{const k=e.dataset.t;if(!S.dn[k]){snap();S.dn[k]=1;S.xp+=5;sv()}render()});
+document.querySelectorAll("[data-hz]").forEach(e=>{const f=()=>{filter=filter===e.dataset.hz?null:e.dataset.hz;render()};e.onclick=f;e.onkeydown=ev=>{if(ev.key==="Enter")f()}});
+const c=$("#clr");if(c)c.onclick=ev=>{ev.preventDefault();filter=null;render()};pbind()}
+const SY=["Cramps","Headache","Fatigue","Mood changes","Spotting","Back pain"],FL=["None","Light","Medium","Heavy"];
+function pstat(){const s=S.pd.starts.slice().sort((a,b)=>a-b),ls=s[s.length-1],ln=s.slice(1).map((v,k)=>v-s[k]),av=ln.length?Math.round(ln.reduce((a,b)=>a+b,0)/ln.length):28;return{s,ls,ln,av,since:S.day-ls,next:ls+av}}
+function pe(s,ls){const x=S.pd.ex[s];return x!=null?x:s===ls?Math.min(S.day,s+6):s+4}
+function syncCyc(){if(S.sex!=="f"||!S.pd||!S.pd.starts.length)return;const p=pstat();S.rd.cyc=(S.rd.cyc||[]).filter(q=>q[0]!==S.day).concat([[S.day,p.since]]).sort((a,b)=>a[0]-b[0]);sv()}
+function ptr(){if(S.sex!=="f"||!S.pd)return"";const p=pstat(),sp=S.pd.sup,n=S.pd.n[S.day]||{flow:0,sym:[]},o=p.next-S.day,cs=stat(I.find(i=>i.id==="cyc"),p.since),cells=[];
+for(let d=S.day-27;d<=S.day;d++){const on=p.s.some(s=>d>=s&&d<=pe(s,p.ls));cells.push(`<span title="Day ${d}${on?", period":""}" style="display:inline-block;width:21px;height:21px;margin:1px;border-radius:5px;font-size:9px;text-align:center;line-height:21px;background:${on?"var(--ac)":"var(--ln)"};color:${on?"var(--onac,#fff)":"var(--mu)"};${d===S.day?"outline:2px solid var(--ink)":""}">${d}</span>`)}
+const bars=p.ln.slice(-6).map(l=>`<div title="${l} days" style="text-align:center;font-size:11px;color:var(--mu)">${l}<div style="width:26px;height:${l*1.6}px;border-radius:5px 5px 0 0;background:${l>=21&&l<=35?"var(--ok)":"var(--wn)"}"></div></div>`).join("");
+const hv=[0,1,2].filter(k=>(S.pd.n[S.day-k]||{}).flow===3).length>=2,chip=on=>`border-radius:99px;${on?"background:var(--ac);color:var(--onac,#fff);border-color:var(--ac)":""}`;
+return `<div class="panel" style="margin-bottom:14px"><h2 style="font-size:17px">Period tracker <span class="tag t${cs}">${LB[cs]}</span></h2>
+${hv?`<div class="alert crit" style="margin-top:8px"><b>Heavy flow on 2 of the last 3 days.</b> Contact your flight surgeon and send this log.</div>`:!sp&&p.since>45?`<div class="alert warn" style="margin-top:8px"><b>${p.since} days since your last period.</b> Review stress, nutrition and your contraception plan with your flight surgeon.</div>`:""}
+<p style="margin:8px 0">Cycle day <b>${p.since+1}</b> · average cycle <b>${p.av} days</b>${p.ln.length>1?` (range ${Math.min(...p.ln)}–${Math.max(...p.ln)})`:""}${sp?" · suppression on, so predictions are paused":` · next period expected around day ${p.next} (${o>=0?"in "+o+" days":-o+" days late"})`}</p>
+<div class="ctl"><button class="pri" data-ps>🩸 Period started today</button><button data-pe>Period ended today</button></div>
+<p style="margin:10px 0 4px"><b>Today’s flow</b></p><div class="ctl">${FL.map((f,k)=>`<button data-fl="${k}" style="${chip(n.flow===k)}">${f}</button>`).join("")}</div>
+<p style="margin:10px 0 4px"><b>Symptoms today</b></p><div class="ctl">${SY.map(s=>`<button data-sy="${s}" style="${chip(n.sym.includes(s))}">${s}</button>`).join("")}</div>
+<p style="margin:12px 0 4px"><b>Last 28 days</b> <span style="color:var(--mu);font-size:12px">pink = period, outlined = today</span></p><div>${cells.join("")}</div>
+${bars?`<p style="margin:12px 0 4px"><b>Past cycle lengths (days)</b></p><div style="display:flex;gap:8px;align-items:flex-end">${bars}</div>`:""}
+<p style="margin-top:12px"><label><input type="checkbox" id="psup" ${sp?"checked":""}> On planned menstrual suppression (long gaps are expected)</label></p>
+<p style="color:var(--mu);font-size:13px">Radiation, stress, low energy intake and sleep loss can change cycles. Keep logging so your flight surgeon can see the pattern. <button data-id="cyc" style="padding:2px 8px">Cycle details</button></p></div>`}
+function pbind(){if(S.sex!=="f"||!S.pd)return;const q=s=>document.querySelectorAll(s),L=pstat(),nn=()=>S.pd.n[S.day]=S.pd.n[S.day]||{flow:0,sym:[]};
+q("[data-ps]").forEach(e=>e.onclick=()=>{if(S.pd.starts.includes(S.day)){toast("A period start is already logged for today.");return}snap();S.pd.starts.push(S.day);S.xp+=10;sv();toast("Period start logged. +10 XP");render()});
+q("[data-pe]").forEach(e=>e.onclick=()=>{if(S.day<L.ls)return;snap();S.pd.ex[L.ls]=S.day;sv();toast("Period end logged.");render()});
+q("[data-fl]").forEach(e=>e.onclick=()=>{snap();nn().flow=+e.dataset.fl;sv();render()});
+q("[data-sy]").forEach(e=>e.onclick=()=>{snap();const n=nn(),s=e.dataset.sy,k=n.sym.indexOf(s);k<0?n.sym.push(s):n.sym.splice(k,1);sv();render()});
+const u=$("#psup");if(u)u.onchange=()=>{snap();S.pd.sup=u.checked?1:0;sv();render()}}
+let AC=null,mute=false;try{mute=localStorage.getItem("hash-mute")==="1"}catch(e){}
+function snd(k){if(mute)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();
+const P={click:[[700,0,.05,"square",.04]],start:[[392,0,.14],[523,.12,.14],[659,.24,.14],[784,.36,.45]],ok:[[660,0,.1],[880,.1,.22]],warn:[[440,0,.12],[440,.18,.14]],crit:[[880,0,.12,"sawtooth",.08],[660,.16,.12,"sawtooth",.08],[880,.32,.14,"sawtooth",.08]],undo:[[520,0,.08],[390,.08,.14]]}[k]||[];
+P.forEach(n=>{const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+n[1];o.type=n[3]||"sine";o.frequency.value=n[0];g.gain.setValueAtTime(n[4]||.12,t);g.gain.exponentialRampToValueAtTime(.001,t+n[2]);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+n[2]+.02)})}catch(e){}}
+function lbl(){$("#ssd").textContent=mute?"🔇 Sound off":"🔊 Sound on";$("#snb").textContent=mute?"🔇":"🔊"}
+function tg(){mute=!mute;try{localStorage.setItem("hash-mute",mute?"1":"0")}catch(e){}lbl();snd("click")}
+function splashInit(){const sp=$("#splash"),se=$("#spe");se.innerHTML=$("#env").innerHTML;$("#sps").value=S.sex;se.value=S.env;lbl();
+const go=()=>{snd("start");sp.classList.add("off");setTimeout(()=>{if(sp.classList.contains("off"))sp.style.display="none"},650);const d=due();setTimeout(()=>toast(`Mission day ${S.day}: ${d.length} measurement(s) due. Tap a card to log.`),900)};
+$("#sgo").onclick=()=>{S.sex=$("#sps").value;S.env=se.value;$("#sex").value=S.sex;$("#env").value=S.env;sv();render();go()};
+$("#snw").onclick=()=>{const a=$("#sps").value,b=se.value;seed();S.sex=a;S.env=b;$("#sex").value=a;$("#env").value=b;HIST.length=0;upU();filter=null;sv();render();go()};
+$("#ssd").onclick=tg;$("#snb").onclick=tg;
+$("#hm").onclick=()=>{sp.style.display="";$("#sps").value=S.sex;se.value=S.env;requestAnimationFrame(()=>sp.classList.remove("off"));snd("click")};
+document.addEventListener("click",e=>{if(e.target.closest("button:not(#ssd):not(#snb),select,summary,[data-id]"))snd("click")},true);$("#sgo").focus()}
+const HIST=[];
+function snap(){HIST.push(JSON.stringify(S));if(HIST.length>30)HIST.shift();upU()}
+function upU(){const u=$("#un");if(u)u.disabled=!HIST.length}
+function undo(){if(!HIST.length)return;S=JSON.parse(HIST.pop());sv();$("#env").value=S.env;$("#sex").value=S.sex;render();upU();if(cur)detail(cur);snd("undo");toast("Undone. Back to the previous state.")}
+function init(){S=ld();if(!S||!S.rd)seed();if(!S.pd)S.pd={starts:[-34,-6],ex:{},sup:0,n:{}};$("#env").innerHTML=Object.keys(ENV).map(k=>`<option value="${k}">${ENV[k].n}</option>`).join("");$("#env").value=S.env;$("#sex").value=S.sex;
+$("#env").onchange=e=>{snap();S.env=e.target.value;sv();render()};$("#sex").onchange=e=>{snap();S.sex=e.target.value;if(S.sex==="f"&&!S.rd.cyc)S.rd.cyc=[];sv();render()};
+$("#nx").onclick=()=>{snap();S.day++;sv();render();const d=due();toast(`Day ${S.day}: ${d.length} measurement(s) due — ${d.slice(0,3).map(i=>i.n).join(", ")}${d.length>3?"…":""}`)};
+$("#rs").onclick=()=>{snap();seed();$("#env").value="ship";$("#sex").value="m";filter=null;sv();render()};
+$("#un").onclick=undo;document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key==="z"&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();undo()}});upU();render();splashInit()}
+init();
+</script></body></html>
